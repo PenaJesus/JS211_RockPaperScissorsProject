@@ -13,7 +13,9 @@ const rl = readline.createInterface({
 
 // the function that will be called by the unit test below
 const rockPaperScissors = (hand1, hand2) => {
-  
+hand1 = hand1.trim().toLowerCase()
+hand2 = hand2.trim().toLowerCase()
+
   if (hand1 === hand2 ) {
     return "It's a tie!";
   } else if (( hand1 === 'rock' && hand2 === 'paper') || (hand1 === 'paper' && hand2 === 'scissors') || (hand1 === 'scissors' && hand2 === 'rock')){
@@ -21,7 +23,9 @@ const rockPaperScissors = (hand1, hand2) => {
   } else if (( hand2 === 'rock' && hand1 === 'paper') || (hand2 === 'paper' && hand1 === 'scissors') || (hand2 === 'scissors' && hand1 === 'rock')){
     return "Hand one wins!"
   }
-
+  else if (((hand1 || hand2) !== 'rock') && ((hand1 || hand2) !== 'paper') && ((hand1 || hand2) !== 'scissors')) {
+   return 'please enter correct values'
+  }
   
   
   // Write code here
@@ -44,6 +48,13 @@ function getPrompt() {
 // Unit Tests
 // to use them run the command: npm test main.js
 // to close them ctrl + C
+
+//** Adding more test **
+// -What if a user adds a space before or after their input?
+// -Brainstorm with your classmates to test for even more edge cases.
+// -if user inputs something other than rock, paper, scissors
+
+
 if (typeof describe === 'function') {
 
   // most are notes for human eyes to read, but essentially passes in inputs then compares if the function you built returns the expected output.
@@ -64,6 +75,23 @@ if (typeof describe === 'function') {
       assert.equal(rockPaperScissors('rock ', 'scissors'), "Hand one wins!");
     });
   });
+  it('check for space BEFORE text', () => {
+    assert.equal(rockPaperScissors('rocK', 'paper'), "Hand two wins!");
+    assert.equal(rockPaperScissors('paper', 'scissors'), "Hand two wins!");
+    assert.equal(rockPaperScissors('rock ', 'scissors'), "Hand one wins!");
+  });
+  it('check for space AFTER text', () => {
+    assert.equal(rockPaperScissors('rocK', 'paper'), "Hand two wins!");
+    assert.equal(rockPaperScissors('paper', 'scissors'), "Hand two wins!");
+    assert.equal(rockPaperScissors('rock ', 'scissors'), "Hand one wins!");
+  });
+  it('if text is other than rock, paper, scissors', () => {
+    assert.equal(rockPaperScissors('pizza', 'grapes'), "please enter correct values");
+    // assert.equal(rockPaperScissors('paper', 'scissors'), "Hand two wins!");
+    // assert.equal(rockPaperScissors('rock ', 'scissors'), "Hand one wins!");
+  });
+  
+
 } else {
 
   // always returns ask the user for another input
